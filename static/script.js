@@ -9,9 +9,6 @@ async function initApp() {
         
         const responsePesan = await fetch('static/jadwal_pesan.json');
         const jadwalPesan = await responsePesan.json();
-        
-        const responsePesan = await fetch('jadwal_pesan.json');
-        const jadwalPesan = await responsePesan.json();
 
         // Jalankan fungsi update secara rutin
         setInterval(() => {
