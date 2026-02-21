@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Imsakiyah Kab. Wonosobo</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="clock">
+            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+        </div>
+
+        <div class="running-text">
+            <marquee behavior="scroll" direction="left" id="running-text">Memuat pesan...</marquee>
+        </div>
+
+        <h1>Jadwal Imsakiyah Kab. Wonosobo</h1>
+        <div class="table-container">
+            <table id="imsakiyah-table">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Hari</th>
+                        <th>Imsak</th>
+                        <th>Subuh</th>
+                        <th>Dzuhur</th>
+                        <th>Ashar</th>
+                        <th>Maghrib</th>
+                        <th>Isya</th>
+                    </tr>
+                </thead>
+                <tbody id="jadwal-body">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="pemberitahuan">
+            <h2>Pemberitahuan Waktu Sholat</h2>
+            <p id="pemberitahuan-text">Memuat pemberitahuan...</p>
+        </div>
+    </div>
+
+    <script src="static/script.js"></script>
+</body>
+</html>
