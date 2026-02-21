@@ -1,0 +1,16 @@
+[
+  {
+    "tanggal_mulai": "01-01-2025",
+    "tanggal_selesai": "31-12-2025",
+    "mulai": "03:00",
+    "selesai": "04:30",
+    "pesan": "Waktu dini hari. Mari persiapkan diri untuk aktivitas hari ini."
+  },
+  {
+    "tanggal_mulai": "01-01-2025",
+    "tanggal_selesai": "31-12-2025",
+    "mulai": "18:00",
+    "selesai": "18:30",
+    "pesan": "Waktu sore hari. Semoga aktivitas hari ini berjalan dengan baik."
+  }
+]
