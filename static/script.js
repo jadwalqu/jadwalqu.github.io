@@ -1,23 +1,19 @@
-// Konfigurasi pesan utama (pengganti pesan_utama di Python)
 const PESAN_UTAMA = "Mari senantiasa menjaga sholat dan meningkatkan kualitas ibadah.";
 
 async function initApp() {
     try {
-        // Tambahkan 'static/' di depan nama file
         const responseImsak = await fetch('static/jadwal_imsakiyah.json');
         const jadwalImsakiyah = await responseImsak.json();
         
         const responsePesan = await fetch('static/jadwal_pesan.json');
         const jadwalPesan = await responsePesan.json();
 
-        // Jalankan fungsi update secara rutin
         setInterval(() => {
             updateClock();
             updatePemberitahuan(jadwalImsakiyah);
             updateRunningText(jadwalPesan, jadwalImsakiyah);
         }, 1000);
 
-        // Render tabel sekali saja untuk 7 hari ke depan
         renderTable(jadwalImsakiyah);
 
     } catch (error) {
@@ -36,7 +32,6 @@ function renderTable(data) {
     const tbody = document.getElementById("jadwal-body");
     const today = new Date();
     
-    // Ambil data untuk 7 hari ke depan
     for (let i = 0; i < 7; i++) {
         const targetDate = new Date();
         targetDate.setDate(today.getDate() + i);
@@ -69,7 +64,6 @@ function updatePemberitahuan(jadwalImsakiyah) {
         return;
     }
 
-    // Cari waktu terdekat
     const listWaktu = ["imsak", "subuh", "dzuhur", "ashar", "maghrib", "isya"];
     let terdekat = null;
     let minSelisih = Infinity;
@@ -80,8 +74,7 @@ function updatePemberitahuan(jadwalImsakiyah) {
         waktuSholat.setHours(jam, menit, 0);
 
         const selisih = (waktuSholat - now) / 1000;
-        
-        // Logika: Cari yang selisihnya paling kecil (bisa positif atau negatif sedikit)
+
         if (Math.abs(selisih) < Math.abs(minSelisih)) {
             minSelisih = selisih;
             terdekat = { nama, selisih };
@@ -104,18 +97,15 @@ function updateRunningText(jadwalPesan, jadwalImsakiyah) {
     const currentTime = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
     let pesanAktif = [];
 
-    // 1. Cek dari jadwal_pesan.json
     jadwalPesan.forEach(p => {
         const start = timeToSeconds(p.mulai);
         const end = timeToSeconds(p.selesai);
-        // Catatan: Di GitHub Pages (statis), pengecekan tahun pada JSON harus disesuaikan 
-        // jika ingin ketat. Di sini kita asumsikan dalam rentang waktu yang benar.
+
         if (currentTime >= start && currentTime <= end) {
             pesanAktif.push(p.pesan);
         }
     });
 
-    // 2. Cek waktu sholat (Pesan Selamat Menunaikan...)
     const todayStr = formatDate(now);
     const jadwalHariIni = jadwalImsakiyah.find(j => j.tanggal === todayStr);
     if (jadwalHariIni) {
@@ -134,7 +124,6 @@ function updateRunningText(jadwalPesan, jadwalImsakiyah) {
     }
 }
 
-// Helper Functions
 function formatDate(date) {
     const d = String(date.getDate()).padStart(2, '0');
     const m = String(date.getMonth() + 1).padStart(2, '0');
