@@ -3,9 +3,12 @@ const PESAN_UTAMA = "Mari senantiasa menjaga sholat dan meningkatkan kualitas ib
 
 async function initApp() {
     try {
-        // Load data JSON
-        const responseImsak = await fetch('jadwal_imsakiyah.json');
+        // Tambahkan 'static/' di depan nama file
+        const responseImsak = await fetch('static/jadwal_imsakiyah.json');
         const jadwalImsakiyah = await responseImsak.json();
+        
+        const responsePesan = await fetch('static/jadwal_pesan.json');
+        const jadwalPesan = await responsePesan.json();
         
         const responsePesan = await fetch('jadwal_pesan.json');
         const jadwalPesan = await responsePesan.json();
