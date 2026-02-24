@@ -54,6 +54,26 @@ function renderTable(data) {
     }
 }
 
+function formatDurasi(detik, status) {
+    const totalDetik = Math.floor(Math.abs(detik));
+    const h = Math.floor(totalDetik / 3600);
+    const m = Math.floor((totalDetik % 3600) / 60);
+    const s = totalDetik % 60;
+
+    if (status === "lewat") {
+        if (h > 0) return `${h} jam ${m} menit`;
+        return `${m} menit`;
+    }
+
+    if (h > 0) {
+        return `${h} jam ${m} menit`;
+    } else if (m > 0) {
+        return `${m} menit ${s} detik`;
+    } else {
+        return `${s} detik`;
+    }
+}
+
 function updatePemberitahuan(jadwalImsakiyah) {
     const now = new Date();
     const todayStr = formatDate(now);
@@ -72,7 +92,6 @@ function updatePemberitahuan(jadwalImsakiyah) {
         const [jam, menit] = jadwalHariIni[nama].split(':');
         const waktuSholat = new Date();
         waktuSholat.setHours(jam, menit, 0);
-
         const selisih = (waktuSholat - now) / 1000;
 
         if (Math.abs(selisih) < Math.abs(minSelisih)) {
@@ -83,12 +102,10 @@ function updatePemberitahuan(jadwalImsakiyah) {
 
     let pesan = "";
     if (terdekat.selisih > 0) {
-        // Akan datang: pakai logika detik jika < 1 jam
         pesan = `${formatDurasi(terdekat.selisih, "mendatang")} lagi memasuki waktu ${terdekat.nama}.`;
     } else if (terdekat.selisih > -600) {
         pesan = `Telah memasuki waktu ${terdekat.nama}.`;
     } else {
-        // Sudah lewat: HANYA menit (tanpa detik)
         pesan = `Waktu ${terdekat.nama} sudah lewat ${formatDurasi(terdekat.selisih, "lewat")} yang lalu.`;
     }
     document.getElementById("pemberitahuan-text").textContent = pesan;
@@ -102,25 +119,13 @@ function updateRunningText(jadwalPesan, jadwalImsakiyah) {
     jadwalPesan.forEach(p => {
         const start = timeToSeconds(p.mulai);
         const end = timeToSeconds(p.selesai);
-
         if (currentTime >= start && currentTime <= end) {
             pesanAktif.push(p.pesan);
         }
     });
 
-    const todayStr = formatDate(now);
-    const jadwalHariIni = jadwalImsakiyah.find(j => j.tanggal === todayStr);
-    if (jadwalHariIni) {
-        ["subuh", "dzuhur", "ashar", "maghrib", "isya"].forEach(w => {
-            if (timeToSeconds(jadwalHariIni[w]) === (now.getHours() * 3600 + now.getMinutes() * 60)) {
-                pesanAktif.push(`Selamat menunaikan ibadah sholat ${w.toUpperCase()}`);
-            }
-        });
-    }
-
     const element = document.getElementById("running-text");
-    const finalPesan = pesanAktif.length > 0 ? pesanAktif[Math.floor(Date.now() / 1000) % pesanAktif.length] : PESAN_UTAMA;
-    
+    const finalPesan = pesanAktif.length > 0 ? pesanAktif[0] : PESAN_UTAMA;
     if (element.textContent !== finalPesan) {
         element.textContent = finalPesan;
     }
@@ -138,31 +143,4 @@ function timeToSeconds(timeStr) {
     return parseInt(h) * 3600 + parseInt(m) * 60;
 }
 
-function formatDurasi(detik, status) {
-    const totalDetik = Math.floor(Math.abs(detik));
-    const h = Math.floor(totalDetik / 3600);
-    const m = Math.floor((totalDetik % 3600) / 60);
-    const s = totalDetik % 60;
-
-    // Jika waktu SUDAH LEWAT, cukup tampilkan menit saja
-    if (status === "lewat") {
-        if (h > 0) {
-            return `${h} jam ${m} menit`;
-        }
-        return `${m} menit`;
-    }
-
-    // Jika waktu AKAN DATANG (mundur)
-    if (h > 0) {
-        // Lebih dari 1 jam: Jam & Menit
-        return `${h} jam ${m} menit`;
-    } else if (m > 0) {
-        // Antara 1 menit sampai 59 menit: Menit & Detik
-        return `${m} menit ${s} detik`;
-    } else {
-        // Di bawah 1 menit: Hanya Detik
-        return `${s} detik`;
-    }
-}
-
-initApp()
+initApp();

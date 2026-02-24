@@ -1,4 +1,4 @@
-/* Reset CSS */
+/* Reset & Base Setup */
 * {
     margin: 0;
     padding: 0;
@@ -6,12 +6,12 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Ganti background.jpg dengan URL gambar asli jika di-host di GitHub */
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* Overlay tipis agar gambar background asli tetap dominan */
+    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.3)), 
                 url('background.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #fff;
+    color: #f8f9fa;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,127 +21,104 @@ body {
 
 .container {
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparan agar elegan */
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    /* Glassmorphism yang lebih transparan agar background terlihat jelas */
+    background: rgba(10, 30, 0, 0.2); 
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    padding: 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 900px;
-    backdrop-filter: blur(1px); /* Efek blur pada background di belakang container */
+    max-width: 950px;
 }
 
-/* Jam Digital */
+/* Jam Digital - Warna Emas Lembut */
 .clock {
-    font-size: 4em;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #00ffcc;
-    text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+    font-family: 'monospace';
+    font-size: 5.5em;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    letter-spacing: -2px;
 }
 
-/* Running Text */
+/* Running Text - Tema Emerald Gold */
 .running-text {
-    margin: 20px 0;
-    font-size: 1.5em;
-    color: #ffcc00;
-    font-weight: 500;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 10px;
-    border-radius: 5px;
+    margin: 25px 0;
+    font-size: 1.3em;
+    color: #ffffff;
+    font-weight: 400;
+    background: rgba(0, 255, 150, 0.1);
+    padding: 15px;
+    border-top: 1px solid rgba(255, 215, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    overflow: hidden;
 }
 
 h1 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #555;
-    padding-bottom: 10px;
+    font-size: 1.5em;
+    margin-bottom: 25px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #e0e0e0;
 }
 
 /* Tabel Jadwal */
 .table-container {
     overflow-x: auto;
-    margin-bottom: 20px;
-    border-radius: 8px;
+    margin-bottom: 30px;
+    border-radius: 15px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-th, td {
-    padding: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    text-align: center;
 }
 
 th {
-    background-color: #2c3e50;
-    color: #00ffcc;
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    padding: 15px;
+    font-size: 0.8em;
     text-transform: uppercase;
-    font-size: 0.85em;
     letter-spacing: 1px;
 }
 
 td {
-    font-size: 1em;
-    color: #ffffff;
-}
-
-/* Baris selang-seling untuk tabel */
-tbody tr:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 1.1em;
 }
 
 tbody tr:hover {
-    background-color: rgba(0, 255, 204, 0.1);
+    background-color: rgba(0, 255, 150, 0.05);
 }
 
-/* Pemberitahuan */
-.pemberitahuan {
-    margin-top: 25px;
-    padding: 15px;
-    border-top: 1px solid #555;
-}
-
+/* Pemberitahuan - Badge Gradien Emas ke Oranye */
 .pemberitahuan h2 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #aaa;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
 }
 
 #pemberitahuan-text {
     font-size: 1.3em;
-    background-color: #e67e22;
-    color: white;
-    padding: 10px 20px;
+    background: linear-gradient(135deg, #d4af37, #aa8913); /* Gold Gradient */
+    color: #051a10;
+    padding: 12px 30px;
     border-radius: 50px;
     display: inline-block;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive Design */
+/* Mobile Responsive */
 @media (max-width: 600px) {
-    .clock {
-        font-size: 2.5em;
-    }
-
-    h1 {
-        font-size: 1.4em;
-    }
-
-    .running-text {
-        font-size: 1.1em;
-    }
-
-    th, td {
-        padding: 8px;
-        font-size: 0.75em;
-    }
-
-    #pemberitahuan-text {
-        font-size: 1em;
-    }
+    .clock { font-size: 3.5em; }
+    .container { padding: 20px; }
+    th, td { padding: 10px 5px; font-size: 0.8em; }
 }
