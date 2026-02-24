@@ -83,11 +83,13 @@ function updatePemberitahuan(jadwalImsakiyah) {
 
     let pesan = "";
     if (terdekat.selisih > 0) {
-        pesan = `${formatDurasi(terdekat.selisih)} lagi memasuki waktu ${terdekat.nama}.`;
+        // Akan datang: pakai logika detik jika < 1 jam
+        pesan = `${formatDurasi(terdekat.selisih, "mendatang")} lagi memasuki waktu ${terdekat.nama}.`;
     } else if (terdekat.selisih > -600) {
         pesan = `Telah memasuki waktu ${terdekat.nama}.`;
     } else {
-        pesan = `Waktu ${terdekat.nama} sudah lewat.`;
+        // Sudah lewat: HANYA menit (tanpa detik)
+        pesan = `Waktu ${terdekat.nama} sudah lewat ${formatDurasi(terdekat.selisih, "lewat")} yang lalu.`;
     }
     document.getElementById("pemberitahuan-text").textContent = pesan;
 }
@@ -136,10 +138,31 @@ function timeToSeconds(timeStr) {
     return parseInt(h) * 3600 + parseInt(m) * 60;
 }
 
-function formatDurasi(detik) {
-    const h = Math.floor(Math.abs(detik) / 3600);
-    const m = Math.floor((Math.abs(detik) % 3600) / 60);
-    return h > 0 ? `${h} jam ${m} menit` : `${m} menit`;
+function formatDurasi(detik, status) {
+    const totalDetik = Math.floor(Math.abs(detik));
+    const h = Math.floor(totalDetik / 3600);
+    const m = Math.floor((totalDetik % 3600) / 60);
+    const s = totalDetik % 60;
+
+    // Jika waktu SUDAH LEWAT, cukup tampilkan menit saja
+    if (status === "lewat") {
+        if (h > 0) {
+            return `${h} jam ${m} menit`;
+        }
+        return `${m} menit`;
+    }
+
+    // Jika waktu AKAN DATANG (mundur)
+    if (h > 0) {
+        // Lebih dari 1 jam: Jam & Menit
+        return `${h} jam ${m} menit`;
+    } else if (m > 0) {
+        // Antara 1 menit sampai 59 menit: Menit & Detik
+        return `${m} menit ${s} detik`;
+    } else {
+        // Di bawah 1 menit: Hanya Detik
+        return `${s} detik`;
+    }
 }
 
 initApp()
