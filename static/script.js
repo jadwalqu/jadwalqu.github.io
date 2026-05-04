@@ -1,4 +1,4 @@
-const PESAN_UTAMA = "Selamat Menunaikan Ibadah Puasa Ramadhan 1447 H. Semoga Amal Ibadah Kita Diterima oleh Allah SWT.";
+const PESAN_UTAMA = "Semoga Allah SWT senantiasa memberikan keberkahan dan kemudahan dalam setiap aktivitas kita.";
 
 async function initApp() {
     try {
